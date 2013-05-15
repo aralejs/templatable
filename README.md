@@ -59,5 +59,5 @@ this.renderPartial('h3');
 
 可以使用 handlebars 的 helper，由于 handlerbars 是全局注册，所以每次编译都会重新注册。
 
-看[示例二](aralejs.org/templatable/examples/)
+看[示例二](http://aralejs.org/templatable/examples/)
 
