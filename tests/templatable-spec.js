@@ -194,6 +194,33 @@ define(function(require) {
       dom.remove();
     });
 
+    it('selector not exist in renderPartial', function() {
+      var t = globalVar.t = new TemplatableWidget({
+        template: '<div><h3>{{title}}</h3><div class="content">{{content}}<img src="{{src}}"></div></div>',
+        model: {
+          title: 'This is a title',
+          content: 'This is content',
+          src: "https://i.alipayobjects.com/e/201207/36PCiRAolN.jpg"
+        }
+      }).render();
+
+      expect(function() {
+        t.renderPartial('.notExist');
+      }).to.throwException('Invalid template selector: .notExist');
+    });
+
+    it('renderAll if renderPartial empty', function() {
+      var t = globalVar.t = new TemplatableWidget({
+        template: '<div><h3>{{title}}</h3><p></p></div>',
+        model: {
+          title: 'This is a title'
+        }
+      }).render();
+
+      t.model.title = 't';
+      t.renderPartial('p');
+      expect(t.element.find('h3').html()).to.be('t');
+    });
   });
 
 });
