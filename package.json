@@ -3,6 +3,7 @@
   "name": "templatable",
   "version": "0.9.0",
   "description": "处理组件的模板渲染，混入到 Widget 中使用。",
+  "keywords": ["utility", "mixin"],
   "homepage": "https://github.com/aralejs/templatable",
   "author": "",
   "repository": "git://github.com/aralejs/templatable.git",
