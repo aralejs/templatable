@@ -1,12 +1,53 @@
-# templatable
+# Templatable
 
 ---
 
-// description
+处理组件的模板渲染，混入到 [Widget](http://aralejs.org/widget/) 中使用。
 
 ---
 
 ## 使用说明
 
+可混入的功能类，提供 Handlebars 模板支持。
 
-## API
+```js
+var Templatable = require('templatable');
+
+var MyWidget = Widget.extend({
+    Implements: Templatable
+});
+
+var myWidget = new MyWidget({
+    template: '<div><h3>{{title}}</h3><ol>{{#each list}}<li>{{item}}</li>{{/each}}</div>',
+    model: {
+        'title': '标题',
+        'list': [
+            { 'item': '文章一' },
+            { 'item': '文章二' }
+        ]
+    },
+    parentNode: '#demo'
+});
+
+myWidget.render();
+```
+
+Templatable 在渲染的时候会读取 `this.model` 和 `this.template`，这两个是实例化的时候传入的，最终生成 `this.element`。
+
+### renderPartial `.renderPartial(selector)`
+
+局部渲染，根据传入的 `selector` 参数，刷新匹配的区域。
+
+默认无需覆盖。需要覆盖时，请使用 `return this` 来保持该方法的链式约定。
+
+```js
+this.model.title = '新标题';
+this.renderPartial('h3');
+```
+
+### templateHelpers
+
+可以使用 handlebars 的 helper，由于 handlerbars 是全局注册，所以每次编译都会重新注册。
+
+看[示例二](aralejs.org/templatable/examples/)
+
