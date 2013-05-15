@@ -36,6 +36,14 @@ myWidget.render();
 
 Templatable 在渲染的时候会读取 `this.model` 和 `this.template`，这两个是实例化的时候传入的，最终生成 `this.element`。
 
+`this.template` 支持多种格式：
+
+1. html 的字符串
+
+2. id 选择器，最常用而且判断简单
+
+3. 函数，通过 handlerbars 编译过的模板
+
 ### renderPartial `.renderPartial(selector)`
 
 局部渲染，根据传入的 `selector` 参数，刷新匹配的区域。
