@@ -11,10 +11,13 @@
   "licenses": "MIT",
   "spm": {
     "output": ["templatable.js"],
-    "alias": {},
-    "devAlias": {},
-    "engines": {
-      "seajs": "seajs/seajs/2.0.0/sea.js"
-    }
+    "alias": {
+      "$": "$",
+      "handlebars": "gallery/handlebars/1.0.1/handlebars"
+    },
+    "devAlias": {
+      "widget": "arale/widget/1.1.0/widget"
+    },
+    "engines": {}
   }
 }
