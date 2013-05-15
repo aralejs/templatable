@@ -46,7 +46,7 @@ define(function(require, exports, module) {
         }
       }
 
-      var compiledTemplate = typeof template === 'function' ? template : compiledTemplates[template];
+      var compiledTemplate = isFunction(template) ? template : compiledTemplates[template];
       if (!compiledTemplate) {
         compiledTemplate = compiledTemplates[template] = Handlebars.compile(template);
       }
