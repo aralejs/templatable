@@ -6,7 +6,7 @@
   "homepage": "https://github.com/aralejs/templatable",
   "author": "",
   "repository": "git://github.com/aralejs/templatable.git",
-  "bugs": "",
+  "bugs": "https://github.com/aralejs/templatable/issues",
   "keywords": ["widget"],
   "licenses": "MIT",
   "spm": {
