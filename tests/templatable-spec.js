@@ -72,7 +72,7 @@ define(function(require) {
       t.render();
       expect($('#t')[0]).to.equal(t.element[0]);
 
-      t.model = { title: 'xxx' };
+      t.set('model', { title: 'xxx' });
       t.renderPartial('h3');
       expect(t.$('h3').html()).to.equal('xxx');
     });
@@ -92,7 +92,7 @@ define(function(require) {
       expect($('#t tbody td').eq(1).hasClass('item-1')).to.equal(true);
       expect($('#t tbody td').eq(0).html()).to.equal('&lt;!--xx--&gt;');
 
-      t.model = { xx: 'xx', items: [1, 2, 3, 4, 5] };
+      t.set('model', { xx: 'xx', items: [1, 2, 3, 4, 5]});
       t.renderPartial('tbody tr');
 
       expect($('#t tbody td').length).to.equal(6);
@@ -134,7 +134,7 @@ define(function(require) {
       t.render();
 
       // 这个测试要看下 Network 面板，看是否有无效的图片请求
-      t.model.content = 'content 2';
+      t.set('model', {content: 'content 2'});
       t.renderPartial('div.content');
 
       expect(t.$('div.content').html().indexOf('content 2') === 0).to.equal(true);
@@ -148,20 +148,19 @@ define(function(require) {
 
       var WidgetA = TemplatableWidget.extend({
         attrs: {
-          content: '1'
+          content: '1',
+          template: '<div id="t7"><h3>{{title}}</h3><div class="content">{{content}}</div></div>',
+
+          model: {
+            title: 'This is a title',
+            content: 'This is content'
+          }
         },
 
         _onRenderContent: function(val) {
           n++;
-          this.model.content = val;
+          this.set('content', val);
           this.renderPartial('div.content');
-        },
-
-        template: '<div id="t7"><h3>{{title}}</h3><div class="content">{{content}}</div></div>',
-
-        model: {
-          title: 'This is a title',
-          content: 'This is content'
         }
       });
 
@@ -217,7 +216,7 @@ define(function(require) {
         }
       }).render();
 
-      t.model.title = 't';
+      t.set('model', {title: 't'});
       t.renderPartial('p');
       expect(t.element.find('h3').html()).to.be('t');
     });
