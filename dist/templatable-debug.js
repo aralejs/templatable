@@ -11,17 +11,18 @@ define("arale/templatable/0.9.0/templatable-debug", [ "$-debug", "gallery/handle
         // 根据配置的模板和传入的数据，构建 this.element 和 templateElement
         parseElementFromTemplate: function() {
             // template 支持 id 选择器
-            var t;
-            if (/^#/.test(this.template) && (t = document.getElementById(this.template.substring(1)))) {
-                this.template = t.innerHTML;
+            var t, template = this.get("template");
+            if (/^#/.test(template) && (t = document.getElementById(template.substring(1)))) {
+                template = t.innerHTML;
+                this.set("template", template);
             }
-            this.templateObject = convertTemplateToObject(this.template);
+            this.templateObject = convertTemplateToObject(template);
             this.element = $(this.compile());
         },
         // 编译模板，混入数据，返回 html 结果
         compile: function(template, model) {
-            template || (template = this.template);
-            model || (model = this.model);
+            template || (template = this.get("template"));
+            model || (model = this.get("model"));
             if (model.toJSON) {
                 model = model.toJSON();
             }
