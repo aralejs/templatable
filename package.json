@@ -3,10 +3,13 @@
   "name": "templatable",
   "version": "0.9.0",
   "description": "处理组件的模板渲染，混入到 Widget 中使用。",
-  "keywords": ["utility", "mixin"],
-  "homepage": "https://github.com/aralejs/templatable",
-  "author": "",
-  "repository": "git://github.com/aralejs/templatable.git",
+  "keywords": ["utility"],
+  "homepage": "http://aralejs.org/templatable/",
+  "author": "guangao <guangao@alipay.com>",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/aralejs/templatable.git"
+  },
   "bugs": {
     "url": "https://github.com/aralejs/templatable/issues"
   },
