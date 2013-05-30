@@ -34,9 +34,9 @@ var myWidget = new MyWidget({
 myWidget.render();
 ```
 
-Templatable 在渲染的时候会读取 `this.model` 和 `this.template`，这两个是实例化的时候传入的，最终生成 `this.element`。
+Templatable 在渲染的时候会读取 `this.get('model')` 和 `this.get('template')`，这两个是实例化的时候传入的，最终生成 `this.element`。
 
-`this.template` 支持多种格式：
+`this.get('template')` 支持多种格式：
 
 1. html 的字符串
 
@@ -51,7 +51,9 @@ Templatable 在渲染的时候会读取 `this.model` 和 `this.template`，这�
 默认无需覆盖。需要覆盖时，请使用 `return this` 来保持该方法的链式约定。
 
 ```js
-this.model.title = '新标题';
+this.set('model', {
+  title: '新标题'
+});
 this.renderPartial('h3');
 ```
 
