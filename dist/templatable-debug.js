@@ -28,7 +28,7 @@ define("arale/templatable/0.9.0/templatable-debug", [ "$-debug", "gallery/handle
             }
             // handlebars runtime
             if (isFunction(template)) {
-                template(model, {
+                return template(model, {
                     helpers: this.templateHelpers
                 });
             } else {
@@ -55,8 +55,8 @@ define("arale/templatable/0.9.0/templatable-debug", [ "$-debug", "gallery/handle
                         }
                     }
                 }
+                return html;
             }
-            return html;
         },
         // 刷新 selector 指定的局部区域
         renderPartial: function(selector) {
