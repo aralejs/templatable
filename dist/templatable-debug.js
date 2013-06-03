@@ -26,26 +26,33 @@ define("arale/templatable/0.9.0/templatable-debug", [ "$-debug", "gallery/handle
             if (model.toJSON) {
                 model = model.toJSON();
             }
-            var helpers = this.templateHelpers;
-            // 注册 helpers
-            if (helpers) {
-                for (var name in helpers) {
-                    if (helpers.hasOwnProperty(name)) {
-                        Handlebars.registerHelper(name, helpers[name]);
+            // handlebars runtime
+            if (isFunction(template)) {
+                template(model, {
+                    helpers: this.templateHelpers
+                });
+            } else {
+                var helpers = this.templateHelpers;
+                // 注册 helpers
+                if (helpers) {
+                    for (var name in helpers) {
+                        if (helpers.hasOwnProperty(name)) {
+                            Handlebars.registerHelper(name, helpers[name]);
+                        }
                     }
                 }
-            }
-            var compiledTemplate = isFunction(template) ? template : compiledTemplates[template];
-            if (!compiledTemplate) {
-                compiledTemplate = compiledTemplates[template] = Handlebars.compile(template);
-            }
-            // 生成 html
-            var html = compiledTemplate(model);
-            // 卸载 helpers
-            if (helpers) {
-                for (name in helpers) {
-                    if (helpers.hasOwnProperty(name)) {
-                        delete Handlebars.helpers[name];
+                var compiledTemplate = compiledTemplates[template];
+                if (!compiledTemplate) {
+                    compiledTemplate = compiledTemplates[template] = Handlebars.compile(template);
+                }
+                // 生成 html
+                var html = compiledTemplate(model);
+                // 卸载 helpers
+                if (helpers) {
+                    for (name in helpers) {
+                        if (helpers.hasOwnProperty(name)) {
+                            delete Handlebars.helpers[name];
+                        }
                     }
                 }
             }
