@@ -38,7 +38,7 @@ define(function(require, exports, module) {
 
       // handlebars runtime
       if (isFunction(template)) {
-        template(model, {
+        return template(model, {
           helpers: this.templateHelpers
         });
       } else {
@@ -68,9 +68,9 @@ define(function(require, exports, module) {
             }
           }
         }
+        return html;
       }
 
-      return html;
     },
 
     // 刷新 selector 指定的局部区域
