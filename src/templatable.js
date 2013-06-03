@@ -36,29 +36,36 @@ define(function(require, exports, module) {
         model = model.toJSON();
       }
 
-      var helpers = this.templateHelpers;
+      // handlebars runtime
+      if (isFunction(template)) {
+        template(model, {
+          helpers: this.templateHelpers
+        });
+      } else {
+        var helpers = this.templateHelpers;
 
-      // 注册 helpers
-      if (helpers) {
-        for (var name in helpers) {
-          if (helpers.hasOwnProperty(name)) {
-            Handlebars.registerHelper(name, helpers[name]);
+        // 注册 helpers
+        if (helpers) {
+          for (var name in helpers) {
+            if (helpers.hasOwnProperty(name)) {
+             Handlebars.registerHelper(name, helpers[name]);
+            }
           }
         }
-      }
+        var compiledTemplate = compiledTemplates[template];
+        if (!compiledTemplate) {
+          compiledTemplate = compiledTemplates[template] = Handlebars.compile(template);
+        }
 
-      var compiledTemplate = isFunction(template) ? template : compiledTemplates[template];
-      if (!compiledTemplate) {
-        compiledTemplate = compiledTemplates[template] = Handlebars.compile(template);
-      }
-      // 生成 html
-      var html = compiledTemplate(model);
+        // 生成 html
+        var html = compiledTemplate(model);
 
-      // 卸载 helpers
-      if (helpers) {
-        for (name in helpers) {
-          if (helpers.hasOwnProperty(name)) {
-            delete Handlebars.helpers[name];
+        // 卸载 helpers
+        if (helpers) {
+          for (name in helpers) {
+            if (helpers.hasOwnProperty(name)) {
+              delete Handlebars.helpers[name];
+            }
           }
         }
       }
