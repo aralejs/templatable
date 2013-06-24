@@ -70,18 +70,29 @@ define(function(require, exports, module) {
         }
         return html;
       }
-
     },
 
     // 刷新 selector 指定的局部区域
     renderPartial: function(selector) {
-      var template = convertObjectToTemplate(this.templateObject, selector);
+      if (this.templateObject) {
+        var template = convertObjectToTemplate(this.templateObject, selector);
 
-      if (template) {
-        this.$(selector).html(this.compile(template));
+        if (template) {
+          this.$(selector).html(this.compile(template));
+        } else {
+          this.element.html(this.compile());
+        }
       }
+
+      // 如果 template 已经编译过了，templateObject 不存在
       else {
-        this.element.html(this.compile());
+        var all = $(this.compile());
+        var selected = all.find(selector);
+        if (selected.length) {
+          this.$(selector).html(selected.html());
+        } else {
+          this.element.html(all.html());
+        }
       }
 
       return this;

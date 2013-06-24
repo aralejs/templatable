@@ -220,6 +220,22 @@ define(function(require) {
       t.renderPartial('p');
       expect(t.element.find('h3').html()).to.be('t');
     });
+
+    it('#3: renderPartial when template is compiled', function() {
+      var template = Handlebars.compile('<div class="container"><h3>{{title}}</h3><p>{{content}}</p></div>');
+      var t = globalVar.t = new TemplatableWidget({
+        template: template,
+        model: {
+          title: 'This is a title',
+          content: 'a'
+        }
+      }).render();
+
+      t.set('model', {content: 'b'});
+      t.renderPartial('p');
+      expect(t.element.html()).to.be('<h3>This is a title</h3><p>b</p>');
+    });
+
   });
 
 });
