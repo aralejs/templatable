@@ -1,4 +1,4 @@
-define("arale/templatable/0.9.0/templatable-debug", [ "$-debug", "gallery/handlebars/1.0.2/handlebars-debug" ], function(require, exports, module) {
+define("arale/templatable/0.9.1/templatable-debug", [ "$-debug", "gallery/handlebars/1.0.2/handlebars-debug" ], function(require, exports, module) {
     var $ = require("$-debug");
     var Handlebars = require("gallery/handlebars/1.0.2/handlebars-debug");
     var compiledTemplates = {};
@@ -60,11 +60,21 @@ define("arale/templatable/0.9.0/templatable-debug", [ "$-debug", "gallery/handle
         },
         // 刷新 selector 指定的局部区域
         renderPartial: function(selector) {
-            var template = convertObjectToTemplate(this.templateObject, selector);
-            if (template) {
-                this.$(selector).html(this.compile(template));
+            if (this.templateObject) {
+                var template = convertObjectToTemplate(this.templateObject, selector);
+                if (template) {
+                    this.$(selector).html(this.compile(template));
+                } else {
+                    this.element.html(this.compile());
+                }
             } else {
-                this.element.html(this.compile());
+                var all = $(this.compile());
+                var selected = all.find(selector);
+                if (selected.length) {
+                    this.$(selector).html(selected.html());
+                } else {
+                    this.element.html(all.html());
+                }
             }
             return this;
         }
