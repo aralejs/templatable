@@ -58,11 +58,13 @@ seajs.use(['widget', 'templatable', 'handlebars', '$'], function(Widget, Templat
 
         Implements: Templatable,
 
-        template: '<div id="b" class="widget"><h3>{{title}}</h3><p>{{content}}</p></div>',
+        attrs: {
+            template: '<div id="b" class="widget"><h3>{{title}}</h3><p>{{content}}</p></div>',
 
-        model: {
-            title: '我是默认标题',
-            content: '我是默认内容'
+            model: {
+                title: '我是默认标题',
+                content: '我是默认内容'
+            },
         },
 
         events: {
