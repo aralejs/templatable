@@ -39,11 +39,11 @@ define(function(require, exports, module) {
         model = model.toJSON();
       }
 
-      // handlebars runtime
+      // handlebars runtime，注意 partials 也需要预编译
       if (isFunction(template)) {
         return template(model, {
           helpers: this.templateHelpers,
-          partials: this.templatePartials
+          partials: precompile(this.templatePartials)
         });
       } else {
         var helpers = this.templateHelpers;
@@ -169,6 +169,17 @@ define(function(require, exports, module) {
     return typeof obj === "function";
   }
 
+  function precompile(partials) {
+    if (!partials) return {};
+
+    var result = {};
+    for (var name in partials) {
+      var partial = partials[name];
+      result[name] = isFunction(partial) ? partial :
+        Handlebars.compile(partial);
+    }
+    return result;
+  }
 });
 
 // 调用 renderPartial 时，Templatable 对模板有一个约束：

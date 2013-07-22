@@ -7,7 +7,6 @@ define(function(require) {
   var expect = require('expect');
   var $ = require('$');
 
-
   describe('Templatable', function() {
     var globalVar = {};
 
@@ -297,7 +296,7 @@ define(function(require) {
         }
       });
 
-      var template = Handlebars.compile('<div>{{> testPartials}}</div>');
+      var template = require('./a');
       var t = globalVar.t = new WidgetA({
         template: template,
         model: {
