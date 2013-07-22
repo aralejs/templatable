@@ -1,7 +1,7 @@
 {
     "family": "arale",
     "name": "templatable",
-    "version": "0.9.1",
+    "version": "0.9.2",
     "description": "处理组件的模板渲染，混入到 Widget 中使用。",
     "keywords": ["utility", "widget"],
     "homepage": "http://aralejs.org/templatable/",

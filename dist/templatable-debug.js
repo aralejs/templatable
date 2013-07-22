@@ -1,4 +1,4 @@
-define("arale/templatable/0.9.1/templatable-debug", [ "$-debug", "gallery/handlebars/1.0.2/handlebars-debug" ], function(require, exports, module) {
+define("arale/templatable/0.9.2/templatable-debug", [ "$-debug", "gallery/handlebars/1.0.2/handlebars-debug" ], function(require, exports, module) {
     var $ = require("$-debug");
     var Handlebars = require("gallery/handlebars/1.0.2/handlebars-debug");
     var compiledTemplates = {};
@@ -6,6 +6,8 @@ define("arale/templatable/0.9.1/templatable-debug", [ "$-debug", "gallery/handle
     module.exports = {
         // Handlebars 的 helpers
         templateHelpers: null,
+        // Handlebars 的 partials
+        templatePartials: null,
         // template 对应的 DOM-like object
         templateObject: null,
         // 根据配置的模板和传入的数据，构建 this.element 和 templateElement
@@ -22,22 +24,33 @@ define("arale/templatable/0.9.1/templatable-debug", [ "$-debug", "gallery/handle
         // 编译模板，混入数据，返回 html 结果
         compile: function(template, model) {
             template || (template = this.get("template"));
-            model || (model = this.get("model"));
+            model || (model = this.get("model")) || (model = {});
             if (model.toJSON) {
                 model = model.toJSON();
             }
             // handlebars runtime
             if (isFunction(template)) {
                 return template(model, {
-                    helpers: this.templateHelpers
+                    helpers: this.templateHelpers,
+                    partials: this.templatePartials
                 });
             } else {
                 var helpers = this.templateHelpers;
+                var partials = this.templatePartials;
+                var helper, partial;
                 // 注册 helpers
                 if (helpers) {
-                    for (var name in helpers) {
-                        if (helpers.hasOwnProperty(name)) {
-                            Handlebars.registerHelper(name, helpers[name]);
+                    for (helper in helpers) {
+                        if (helpers.hasOwnProperty(helper)) {
+                            Handlebars.registerHelper(helper, helpers[helper]);
+                        }
+                    }
+                }
+                // 注册 partials
+                if (partials) {
+                    for (partial in partials) {
+                        if (partials.hasOwnProperty(partial)) {
+                            Handlebars.registerPartial(partial, partials[partial]);
                         }
                     }
                 }
@@ -49,9 +62,17 @@ define("arale/templatable/0.9.1/templatable-debug", [ "$-debug", "gallery/handle
                 var html = compiledTemplate(model);
                 // 卸载 helpers
                 if (helpers) {
-                    for (name in helpers) {
-                        if (helpers.hasOwnProperty(name)) {
-                            delete Handlebars.helpers[name];
+                    for (helper in helpers) {
+                        if (helpers.hasOwnProperty(helper)) {
+                            delete Handlebars.helpers[helper];
+                        }
+                    }
+                }
+                // 卸载 partials
+                if (partials) {
+                    for (partial in partials) {
+                        if (partials.hasOwnProperty(partial)) {
+                            delete Handlebars.partials[partial];
                         }
                     }
                 }
