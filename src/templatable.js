@@ -11,6 +11,9 @@ define(function(require, exports, module) {
     // Handlebars 的 helpers
     templateHelpers: null,
 
+    // Handlebars 的 partials
+    templatePartials: null,
+
     // template 对应的 DOM-like object
     templateObject: null,
 
@@ -31,7 +34,7 @@ define(function(require, exports, module) {
     compile: function(template, model) {
       template || (template = this.get('template'));
 
-      model || (model = this.get('model'));
+      model || (model = this.get('model')) || (model = {});
       if (model.toJSON) {
         model = model.toJSON();
       }
@@ -39,19 +42,31 @@ define(function(require, exports, module) {
       // handlebars runtime
       if (isFunction(template)) {
         return template(model, {
-          helpers: this.templateHelpers
+          helpers: this.templateHelpers,
+          partials: this.templatePartials
         });
       } else {
         var helpers = this.templateHelpers;
+        var partials = this.templatePartials;
+        var helper, partial;
 
         // 注册 helpers
         if (helpers) {
-          for (var name in helpers) {
-            if (helpers.hasOwnProperty(name)) {
-             Handlebars.registerHelper(name, helpers[name]);
+          for (helper in helpers) {
+            if (helpers.hasOwnProperty(helper)) {
+              Handlebars.registerHelper(helper, helpers[helper]);
             }
           }
         }
+        // 注册 partials
+        if (partials) {
+          for (partial in partials) {
+            if (partials.hasOwnProperty(partial)) {
+              Handlebars.registerPartial(partial, partials[partial]);
+            }
+          }
+        }
+
         var compiledTemplate = compiledTemplates[template];
         if (!compiledTemplate) {
           compiledTemplate = compiledTemplates[template] = Handlebars.compile(template);
@@ -62,9 +77,17 @@ define(function(require, exports, module) {
 
         // 卸载 helpers
         if (helpers) {
-          for (name in helpers) {
-            if (helpers.hasOwnProperty(name)) {
-              delete Handlebars.helpers[name];
+          for (helper in helpers) {
+            if (helpers.hasOwnProperty(helper)) {
+              delete Handlebars.helpers[helper];
+            }
+          }
+        }
+        // 卸载 partials
+        if (partials) {
+          for (partial in partials) {
+            if (partials.hasOwnProperty(partial)) {
+              delete Handlebars.partials[partial];
             }
           }
         }

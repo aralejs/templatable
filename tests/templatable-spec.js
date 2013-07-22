@@ -237,6 +237,74 @@ define(function(require) {
         .to.be('<h3>this is a title</h3><p>b</p>');
     });
 
-  });
+    it('support helper', function() {
+      var WidgetA = TemplatableWidget.extend({
+        templateHelpers: {
+          testHelper: function() {
+            return 'helper';
+          }
+        },
+        attrs: {
+          model: {}
+        }
+      });
 
+      var t = globalVar.t = new WidgetA({
+        template: '<div>{{testHelper}}</div>'
+      }).render();
+      expect(t.element.html()).to.be('helper');
+    });
+
+    it('support helper runtime', function() {
+      var WidgetA = TemplatableWidget.extend({
+        templateHelpers: {
+          testHelper: function() {
+            return 'helper';
+          }
+        },
+        attrs: {
+          model: {}
+        }
+      });
+
+      var template = Handlebars.compile('<div>{{testHelper}}</div>');
+      var t = globalVar.t = new WidgetA({
+        template: template
+      }).render();
+      expect(t.element.html()).to.be('helper');
+    });
+
+    it('support partial', function() {
+      var WidgetA = TemplatableWidget.extend({
+        templatePartials: {
+          testPartials: '{{title}}'
+        }
+      });
+
+      var t = globalVar.t = new WidgetA({
+        template: '<div>{{> testPartials}}</div>',
+        model: {
+          title: 'title'
+        }
+      }).render();
+      expect(t.element.html()).to.be('title');
+    });
+
+    it('support partial runtime', function() {
+      var WidgetA = TemplatableWidget.extend({
+        templatePartials: {
+          testPartials: '{{title}}'
+        }
+      });
+
+      var template = Handlebars.compile('<div>{{> testPartials}}</div>');
+      var t = globalVar.t = new WidgetA({
+        template: template,
+        model: {
+          title: 'title'
+        }
+      }).render();
+      expect(t.element.html()).to.be('title');
+    });
+  });
 });
