@@ -63,3 +63,7 @@ this.renderPartial('h3');
 
 看[示例二](http://aralejs.org/templatable/examples/)
 
+### templatePartials
+
+可以使用 handlebars 的 partials。
+
