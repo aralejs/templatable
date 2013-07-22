@@ -5,6 +5,7 @@
 ## 0.9.2
 
 `tag:new` 支持 handlebars 的 partial
+`tag:improved` renderPartial 没有参数时会整个渲染
 
 ## 0.9.1
 
