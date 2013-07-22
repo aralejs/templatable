@@ -28,11 +28,11 @@ define("arale/templatable/0.9.2/templatable-debug", [ "$-debug", "gallery/handle
             if (model.toJSON) {
                 model = model.toJSON();
             }
-            // handlebars runtime
+            // handlebars runtime，注意 partials 也需要预编译
             if (isFunction(template)) {
                 return template(model, {
                     helpers: this.templateHelpers,
-                    partials: this.templatePartials
+                    partials: precompile(this.templatePartials)
                 });
             } else {
                 var helpers = this.templateHelpers;
@@ -84,7 +84,11 @@ define("arale/templatable/0.9.2/templatable-debug", [ "$-debug", "gallery/handle
             if (this.templateObject) {
                 var template = convertObjectToTemplate(this.templateObject, selector);
                 if (template) {
-                    this.$(selector).html(this.compile(template));
+                    if (selector) {
+                        this.$(selector).html(this.compile(template));
+                    } else {
+                        this.element.html(this.compile(template));
+                    }
                 } else {
                     this.element.html(this.compile());
                 }
@@ -113,9 +117,14 @@ define("arale/templatable/0.9.2/templatable-debug", [ "$-debug", "gallery/handle
     // 根据 selector 得到 DOM-like template object，并转换为 template 字符串
     function convertObjectToTemplate(templateObject, selector) {
         if (!templateObject) return;
-        var element = templateObject.find(selector);
-        if (element.length === 0) {
-            throw new Error("Invalid template selector: " + selector);
+        var element;
+        if (selector) {
+            element = templateObject.find(selector);
+            if (element.length === 0) {
+                throw new Error("Invalid template selector: " + selector);
+            }
+        } else {
+            element = templateObject;
         }
         return decode(element.html());
     }
@@ -127,5 +136,14 @@ define("arale/templatable/0.9.2/templatable-debug", [ "$-debug", "gallery/handle
     }
     function isFunction(obj) {
         return typeof obj === "function";
+    }
+    function precompile(partials) {
+        if (!partials) return {};
+        var result = {};
+        for (var name in partials) {
+            var partial = partials[name];
+            result[name] = isFunction(partial) ? partial : Handlebars.compile(partial);
+        }
+        return result;
     }
 });
