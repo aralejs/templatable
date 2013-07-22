@@ -101,7 +101,11 @@ define(function(require, exports, module) {
         var template = convertObjectToTemplate(this.templateObject, selector);
 
         if (template) {
-          this.$(selector).html(this.compile(template));
+          if (selector) {
+            this.$(selector).html(this.compile(template));
+          } else {
+            this.element.html(this.compile(template));
+          }
         } else {
           this.element.html(this.compile());
         }
@@ -142,11 +146,15 @@ define(function(require, exports, module) {
   function convertObjectToTemplate(templateObject, selector) {
     if (!templateObject) return;
 
-    var element = templateObject.find(selector);
-    if (element.length === 0) {
-      throw new Error('Invalid template selector: ' + selector);
+    var element;
+    if (selector) {
+      element = templateObject.find(selector);
+      if (element.length === 0) {
+        throw new Error('Invalid template selector: ' + selector);
+      }
+    } else {
+      element = templateObject;
     }
-
     return decode(element.html());
   }
 

@@ -61,7 +61,7 @@ define(function(require) {
     it('renderPartial', function() {
 
       var t = globalVar.t = new TemplatableWidget({
-        template: '<div id="t"><h3>{{title}}</h3><div>{{content}}</div></div>',
+        template: '<div id="t"><h3>{{title}}</h3><p>{{content}}</p></div>',
         model: {
           title: 'This is a title',
           content: 'This is content'
@@ -71,9 +71,14 @@ define(function(require) {
       t.render();
       expect($('#t')[0]).to.equal(t.element[0]);
 
-      t.set('model', { title: 'xxx' });
+      t.set('model', { title: 'xxx', content: 'yyy' });
       t.renderPartial('h3');
       expect(t.$('h3').html()).to.equal('xxx');
+      expect(t.$('p').html()).to.equal('This is content');
+
+      t.renderPartial();
+      expect(t.$('h3').html()).to.equal('xxx');
+      expect(t.$('p').html()).to.equal('yyy');
     });
 
     it('template expression in invalid place', function() {
@@ -230,10 +235,14 @@ define(function(require) {
         }
       }).render();
 
-      t.set('model', {content: 'b'});
+      t.set('model', {title: 'b', content: 'c'});
       t.renderPartial('p');
       expect(t.element.html().replace(/\r\n/, '').toLowerCase())
-        .to.be('<h3>this is a title</h3><p>b</p>');
+        .to.be('<h3>this is a title</h3><p>c</p>');
+
+      t.renderPartial();
+      expect(t.element.html().replace(/\r\n/, '').toLowerCase())
+        .to.be('<h3>b</h3><p>c</p>');
     });
 
     it('support helper', function() {
