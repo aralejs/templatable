@@ -127,7 +127,7 @@ seajs.use(['widget', 'templatable', 'handlebars', '$'], function(Widget, Templat
         },
 
         templateHelpers: {
-            'list': function(items, options) {
+            'list': function(items) {
                 var out = '';
 
                 for (var i = 0, len = items.length; i < len; i++) {
