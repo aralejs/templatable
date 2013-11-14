@@ -99,6 +99,7 @@ seajs.use(['widget', 'templatable', 'handlebars', '$'], function(Widget, Templat
 
 ### HTML
 
+````html
 <div id="example3" class="example">
     <script id="template-c" type="text/x-handlebars-template">
         <div>
@@ -107,17 +108,7 @@ seajs.use(['widget', 'templatable', 'handlebars', '$'], function(Widget, Templat
         </div>
     </script>
 </div>
-
-```
-<div id="example3" class="example">
-    <script id="template-c" type="text/x-handlebars-template">
-        <div>
-            <h3>{{title}}</h3>
-            <ul>{{list items}}</ul>
-        </div>
-    </script>
-</div>
-```
+````
 
 ### JavaScript
 
@@ -136,7 +127,7 @@ seajs.use(['widget', 'templatable', 'handlebars', '$'], function(Widget, Templat
         },
 
         templateHelpers: {
-            'list': function(items) {
+            'list': function(items, options) {
                 var out = '';
 
                 for (var i = 0, len = items.length; i < len; i++) {
