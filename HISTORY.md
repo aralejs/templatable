@@ -2,6 +2,10 @@
 
 ---
 
+## 0.10.0
+
+`CHANGED` 升级到 spm@3.x
+
 ## 0.9.2
 
 `tag:new` 支持 handlebars 的 partial
