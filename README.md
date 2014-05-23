@@ -2,6 +2,7 @@
 
 ---
 
+[![spm package](http://spmjs.io/badge/arale-templatable)](http://spmjs.io/package/arale-templatable)
 [![Build Status](https://travis-ci.org/aralejs/templatable.png?branch=master)](https://travis-ci.org/aralejs/templatable) [![Coverage Status](https://coveralls.io/repos/aralejs/templatable/badge.png?branch=master)](https://coveralls.io/r/aralejs/templatable)
 
 处理组件的模板渲染，混入到 [Widget](http://aralejs.org/widget/) 中使用。
