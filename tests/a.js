@@ -1,5 +1,5 @@
 // <div>{{> testPartials}}</div> 编译后
-var Handlebars = require("handlebars-runtime")['default'],
+var Handlebars = require("spm-handlebars-runtime")['default'],
   template = Handlebars.template,
   templates = Handlebars.templates = Handlebars.templates || {};
 module.exports = template(function(e, a, t, r, s) {
