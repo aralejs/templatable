@@ -1,7 +1,8 @@
 // <div>{{> testPartials}}</div> 编译后
-var Handlebars = require("spm-handlebars-runtime")['default'],
-  template = Handlebars.template,
-  templates = Handlebars.templates = Handlebars.templates || {};
+const Handlebars = require("handlebars-runtime");
+console.log(Handlebars);
+const template = Handlebars.template;
+const templates = Handlebars.templates = Handlebars.templates || {};
 module.exports = template(function(e, a, t, r, s) {
   this.compilerInfo = [4, ">= 1.0.0"], t = this.merge(t, e.helpers), r = this.merge(r, e.partials), s = s || {};
   var l, i = "",

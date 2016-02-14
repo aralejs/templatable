@@ -1,10 +1,12 @@
 # History
 
 ---
+## 1.0.0
+`CHANGED` 升级到 spm@3.9，发布为npm源
 
 ## 0.10.0
 
-`CHANGED` 升级到 spm@3.x
+`CHANGED` 升级到 spm@3.6
 
 ## 0.9.2
 

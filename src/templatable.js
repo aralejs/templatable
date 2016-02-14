@@ -1,5 +1,5 @@
-var $ = require('spm-jquery');
-var Handlebars = require('spm-handlebars')['default'];
+var $ = require('jquery');
+var Handlebars = require('handlebars')['default'];
 
 var compiledTemplates = {};
 

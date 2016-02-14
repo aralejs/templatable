@@ -9,35 +9,39 @@
 <div id="container">aaa</div>
 
 ````javascript
-seajs.use(['$', 'widget', 'templatable'], function($, Widget, Templatable) {
-    var MyWidget = Widget.extend({
-        Implements: Templatable,
-        template: '<p>{{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}}</p>'
-    });
+window.jQuery = require('spm-jquery');
+var $ = window.jQuery;
+var Widget = require('arale-widget');
+var Templatable = require('arale-templatable');
+// var Templatable = require('../dist/arale-templatable/1.0.0/index');
 
-    $(function() {
-        var $console = $('#console-div');
-        var $container = $('#container');
-        $('#btn').click(function() {
-            var startTime = (new Date()).getTime();
-            $console.append('start: ' + startTime + '<br/>');
+var MyWidget = Widget.extend({
+    Implements: Templatable,
+    template: '<p>{{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}} - {{a}}</p>'
+});
 
-            var w;
+$(function() {
+    var $console = $('#console-div');
+    var $container = $('#container');
+    $('#btn').click(function() {
+        var startTime = (new Date()).getTime();
+        $console.append('start: ' + startTime + '<br/>');
 
-            for (var i = 0; i < 20; i++) {
-                w = new MyWidget({
-                    model: {
-                        a: i
-                    },
-                    parentNode: $container
-                });
-                w.render();
-            }
+        var w;
 
-            var endTime = (new Date()).getTime();
-            $console.append('end: ' + endTime + '<br/>');
-            $console.append('total cost: ' + (endTime - startTime) + '<br/>');
-        });
+        for (var i = 0; i < 20; i++) {
+            w = new MyWidget({
+                model: {
+                    a: i
+                },
+                parentNode: $container
+            });
+            w.render();
+        }
+
+        var endTime = (new Date()).getTime();
+        $console.append('end: ' + endTime + '<br/>');
+        $console.append('total cost: ' + (endTime - startTime) + '<br/>');
     });
 });
 ````
