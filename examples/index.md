@@ -3,7 +3,7 @@
 - order: 1
 
 ---
-
+<script type="text/javascript" src="https://a.alipayobjects.com/jquery/jquery/1.7.2/jquery.js"></script>
 <style>
     .markdown-body .widget {
         zoom: 1;
@@ -52,45 +52,47 @@
 ### JavaScript
 
 ````js
-seajs.use(['widget', 'templatable', 'handlebars', '$'], function(Widget, Templatable, Handlebars, $) {
 
-    var WidgetB = Widget.extend({
+var Widget = require('arale-widget');
+var Templatable = require('arale-templatable');
+var $ = require('jquery');
+var WidgetB = Widget.extend({
 
-        Implements: Templatable,
+    Implements: Templatable,
 
-        attrs: {
-            template: '<div id="b" class="widget"><h3>{{title}}</h3><p>{{content}}</p></div>',
+    attrs: {
+        template: '<div id="b" class="widget"><h3>{{title}}</h3><p>{{content}}</p></div>',
 
-            model: {
-                title: '我是默认标题',
-                content: '我是默认内容'
-            },
-        },
-
-        events: {
-            'click': 'animate'
-        },
-
-        animate: function() {
-            this.$('p').slideToggle('slow');
-        },
-
-        setup: function() {
-            this.$('p').css({
-                'height': 100,
-                'padding': 20,
-                'backgroundColor': '#eee'
-            });
-        }
-    });
-
-    var b = new WidgetB({
         model: {
-            content: '我是传入的内容，点击我试试'
+            title: '我是默认标题',
+            content: '我是默认内容'
         },
-        parentNode: '#example2'
-    }).render();
+    },
+
+    events: {
+        'click': 'animate'
+    },
+
+    animate: function() {
+        this.$('p').slideToggle('slow');
+    },
+
+    setup: function() {
+        this.$('p').css({
+            'height': 100,
+            'padding': 20,
+            'backgroundColor': '#eee'
+        });
+    }
 });
+
+new WidgetB({
+    model: {
+        content: '我是传入的内容，点击我试试'
+    },
+    parentNode: '#example2'
+}).render();
+
 ````
 
 
@@ -113,71 +115,73 @@ seajs.use(['widget', 'templatable', 'handlebars', '$'], function(Widget, Templat
 ### JavaScript
 
 ````js
-seajs.use(['widget', 'templatable', 'handlebars', '$'], function(Widget, Templatable, Handlebars, $) {
+window.jQuery = require('spm-jquery');
+var $ = window.jQuery;
+var Widget = require('arale-widget');
+var Templatable = require('arale-templatable');
+var Handlebars = require('handlebars')['default'];
+var WidgetC = Widget.extend({
 
-    var WidgetC = Widget.extend({
+    Implements: Templatable,
 
-        Implements: Templatable,
+    events: {
+        'click li .remove': 'remove',
+        'click h3': 'toggle',
+        'mouseenter ul': 'focus',
+        'mouseleave ul': 'blur'
+    },
 
-        events: {
-            'click li .remove': 'remove',
-            'click h3': 'toggle',
-            'mouseenter ul': 'focus',
-            'mouseleave ul': 'blur'
-        },
+    templateHelpers: {
+        'list': function(items) {
+            var out = '';
 
-        templateHelpers: {
-            'list': function(items) {
-                var out = '';
-
-                for (var i = 0, len = items.length; i < len; i++) {
-                    var item = items[i];
-                    out += '<li>' + item.text +
-                           '<a href="#" class="remove">X</a></li>';
-                }
-
-                return new Handlebars.SafeString(out);
+            for (var i = 0, len = items.length; i < len; i++) {
+                var item = items[i];
+                out += '<li>' + item.text +
+                       '<a href="#" class="remove">X</a></li>';
             }
-        },
 
-        remove: function(event) {
-            event.preventDefault();
-            $(event.target).parent().remove();
-        },
-
-        toggle: function() {
-            this.$('ul').slideToggle('slow');
-        },
-
-        focus: function() {
-            this.$('ul').css('backgroundColor', '#eee');
-        },
-
-        blur: function() {
-            this.$('ul').css('backgroundColor', '');
-        },
-
-        setup: function() {
-            this.element.attr('style', this.get('style'));
-            this.element.addClass(this.get('className'));
+            return new Handlebars.SafeString(out);
         }
+    },
 
-    });
+    remove: function(event) {
+        event.preventDefault();
+        $(event.target).parent().remove();
+    },
 
-    var c = new WidgetC({
-        className: 'widget',
-        titleClassName: 'title',
-        style: 'width: 350px',
-        model: {
-            title: "设计原则（点击我）",
-            items: [
-                { "text": "开放：开源开放，海纳百川。（悬浮上来）" },
-                { "text": "简单：如无必要，勿增实体。" },
-                { "text": "易用：一目了然，容易学习。" }
-            ]
-        },
-        template: $('#template-c').html(),
-        parentNode: '#example3'
-    }).render();
+    toggle: function() {
+        this.$('ul').slideToggle('slow');
+    },
+
+    focus: function() {
+        this.$('ul').css('backgroundColor', '#eee');
+    },
+
+    blur: function() {
+        this.$('ul').css('backgroundColor', '');
+    },
+
+    setup: function() {
+        this.element.attr('style', this.get('style'));
+        this.element.addClass(this.get('className'));
+    }
+
 });
+
+new WidgetC({
+    className: 'widget',
+    titleClassName: 'title',
+    style: 'width: 350px',
+    model: {
+        title: "设计原则（点击我）",
+        items: [
+            { "text": "开放：开源开放，海纳百川。（悬浮上来）" },
+            { "text": "简单：如无必要，勿增实体。" },
+            { "text": "易用：一目了然，容易学习。" }
+        ]
+    },
+    template: $('#template-c').html(),
+    parentNode: '#example3'
+}).render();
 ````

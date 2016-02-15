@@ -1,9 +1,7 @@
 var Widget = require('arale-widget');
 var Templatable = require('../src/templatable');
-
 var Handlebars = require('handlebars')['default'];
-var expect = require('expect.js');
-var $ = require('jquery');
+var $ = require('spm-jquery');
 
 describe('Templatable', function () {
   var globalVar = {};
