@@ -1,6 +1,6 @@
 var Widget = require('arale-widget');
 var Templatable = require('../src/templatable');
-var Handlebars = require('handlebars')['default'];
+var Handlebars = require('spm-handlebars')['default'];
 var $ = require('spm-jquery');
 
 describe('Templatable', function () {
@@ -299,23 +299,6 @@ describe('Templatable', function () {
 
     var t = globalVar.t = new WidgetA({
       template: '<div>{{> testPartials}}</div>',
-      model: {
-        title: 'title'
-      }
-    }).render();
-    expect(t.element.html()).to.be('title');
-  });
-
-  it('support partial runtime', function () {
-    var WidgetA = TemplatableWidget.extend({
-      templatePartials: {
-        testPartials: '{{title}}'
-      }
-    });
-
-    var template = require('./a');
-    var t = globalVar.t = new WidgetA({
-      template: template,
       model: {
         title: 'title'
       }
