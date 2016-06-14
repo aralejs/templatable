@@ -119,7 +119,7 @@ window.jQuery = require('spm-jquery');
 var $ = window.jQuery;
 var Widget = require('arale-widget');
 var Templatable = require('arale-templatable');
-var Handlebars = require('handlebars')['default'];
+var Handlebars = require('spm-handlebars')['default'];
 var WidgetC = Widget.extend({
 
     Implements: Templatable,
