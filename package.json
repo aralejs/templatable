@@ -1,6 +1,6 @@
 {
   "name": "arale-templatable",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "处理组件的模板渲染，混入到 Widget 中使用。",
   "keywords": [
     "utility",
@@ -32,8 +32,7 @@
     "spm-jquery": "1.7.2"
   },
   "scripts": {
-    "compile": "rm -rf lib && npm run build",
-    "build": "atool-build -o ./dist/",
+    "build": "rm -rf lib && atool-build -o ./lib/",
     "test": "atool-test",
     "doc": "atool-doc"
   },
