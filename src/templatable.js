@@ -1,7 +1,6 @@
-var $ = require('jquery');
-var Handlebars = require('spm-handlebars')['default'];
-
-var compiledTemplates = {};
+const $ = require('jquery');
+const Handlebars = require('spm-handlebars')['default'];
+const compiledTemplates = {};
 
 // 提供 Template 模板支持，默认引擎是 Handlebars
 module.exports = {
@@ -126,7 +125,7 @@ module.exports = {
 
 // Helpers
 // -------
-var _compile = Handlebars.compile;
+const _compile = Handlebars.compile;
 
 Handlebars.compile = function (template) {
   return isFunction(template) ? template : _compile.call(Handlebars, template);

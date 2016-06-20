@@ -1,1 +1,1 @@
-module.exports = require('./src/templatable.js');
+module.exports = require('./lib/templatable');
