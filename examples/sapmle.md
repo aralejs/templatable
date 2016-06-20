@@ -1,9 +1,5 @@
 # 基本的事件操作
 
-- order: 1
-
----
-<script type="text/javascript" src="https://a.alipayobjects.com/jquery/jquery/1.7.2/jquery.js"></script>
 <style>
     .markdown-body .widget {
         zoom: 1;
@@ -38,25 +34,32 @@
     }
 </style>
 
+```html
 
-## 示例一：Templatable Widget
+<script type="text/javascript" src="https://a.alipayobjects.com/jquery/jquery/1.7.2/jquery.js"></script>
 
-
-### HTML
-
-````html
+<h2>示例一：Templatable Widget</h2>
 <div id="example2" class="example">
 </div>
-````
 
-### JavaScript
+<h2>示例二：Template Helpers</h2>
+<div id="example3" class="example">
+    <script id="template-c" type="text/x-handlebars-template">
+        <div>
+            <h3>{{title}}</h3>
+            <ul>{{list items}}</ul>
+        </div>
+    </script>
+</div>
+```
 
-````js
 
-var Widget = require('arale-widget');
-var Templatable = require('arale-templatable');
-var $ = require('jquery');
-var WidgetB = Widget.extend({
+```javascript
+const Handlebars = require('spm-handlebars')['default'];
+const Widget = require('arale-widget');
+const Templatable = require('../src/templatable');
+
+const WidgetB = Widget.extend({
 
     Implements: Templatable,
 
@@ -93,34 +96,7 @@ new WidgetB({
     parentNode: '#example2'
 }).render();
 
-````
-
-
-## 示例二：Template Helpers
-
-
-### HTML
-
-````html
-<div id="example3" class="example">
-    <script id="template-c" type="text/x-handlebars-template">
-        <div>
-            <h3>{{title}}</h3>
-            <ul>{{list items}}</ul>
-        </div>
-    </script>
-</div>
-````
-
-### JavaScript
-
-````js
-window.jQuery = require('spm-jquery');
-var $ = window.jQuery;
-var Widget = require('arale-widget');
-var Templatable = require('arale-templatable');
-var Handlebars = require('spm-handlebars')['default'];
-var WidgetC = Widget.extend({
+const WidgetC = Widget.extend({
 
     Implements: Templatable,
 
@@ -147,7 +123,7 @@ var WidgetC = Widget.extend({
 
     remove: function(event) {
         event.preventDefault();
-        $(event.target).parent().remove();
+        jQuery(event.target).parent().remove();
     },
 
     toggle: function() {
@@ -166,7 +142,6 @@ var WidgetC = Widget.extend({
         this.element.attr('style', this.get('style'));
         this.element.addClass(this.get('className'));
     }
-
 });
 
 new WidgetC({
@@ -181,7 +156,7 @@ new WidgetC({
             { "text": "易用：一目了然，容易学习。" }
         ]
     },
-    template: $('#template-c').html(),
+    template: jQuery('#template-c').html(),
     parentNode: '#example3'
 }).render();
-````
+```
